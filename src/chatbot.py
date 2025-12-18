@@ -68,8 +68,13 @@ Context:
 
 Question: {question}
 
-Answer: Provide a clear, informative answer based on the context above. Include relevant details about symptoms, 
-risk factors, prevention, or treatment as applicable to the question."""
+Answer: Provide a clear, well-structured answer based on the context above. Format your response as follows:
+- Start with a brief definition or overview (1-2 sentences)
+- Use bullet points (•) to list key information
+- Break down complex information into separate paragraphs
+- Include relevant details about symptoms, risk factors, prevention, or treatment
+- Keep each point concise and easy to read
+- Use double line breaks between sections for better readability"""
 
         self.prompt = PromptTemplate(
             template=self.prompt_template,

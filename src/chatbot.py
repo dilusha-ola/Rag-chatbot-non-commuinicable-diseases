@@ -17,7 +17,7 @@ class NCDChatbot:
     
     def __init__(
         self,
-        model_name: str = "gemini-pro",
+        model_name: str = "models/gemini-2.5-flash",
         temperature: float = 0.7,
         google_api_key: Optional[str] = None
     ):

@@ -5,7 +5,7 @@ Uses LangChain to combine retrieval and generation with Google Gemini.
 
 import os
 from typing import Optional
-from langchain.chains import RetrievalQA
+from langchain_classic.chains import RetrievalQA
 from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain_core.prompts import PromptTemplate
 from dotenv import load_dotenv

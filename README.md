@@ -1,8 +1,18 @@
 # NCD Health Assistant - Backend
 
-This is the backend server for an AI chatbot that answers questions about non-communicable diseases like diabetes, heart disease, and cancer. It uses your PDF documents as a knowledge base and Google's Gemini AI to provide accurate answers.
+This is the backend server for an AI chatbot that answers questions about non-communicable diseases like diabetes, heart disease, and cancer. It uses your PDF documents as a knowledge base and **Groq's Llama3** AI to provide fast, accurate answers.
 
-## How It Works - High Level View
+ What's New: Switched to Groq!
+
+We've migrated from Google Gemini to **Groq** for better performance:
+Free tier: 30 requests/min, 14,400 requests/day** (vs Gemini's 20/day)
+Ultra-fast inference** with Llama3
+Open-source models** (Llama3, Mixtral)
+Easy setup** - Get your free API key in 2 minutes
+
+[See Groq Setup Guide](GROQ_SETUP.md)** for getting your API key
+
+ How It Works - High Level View
 
 ```
 Your Frontend Application
@@ -17,7 +27,7 @@ FastAPI Backend (this project)
         +---> Searches through document database
         |     (ChromaDB finds relevant information)
         |
-        +---> Sends context to Google Gemini AI
+        +---> Sends context to Groq (Llama3)
         |
         +---> Returns AI-generated answer
 
@@ -41,8 +51,8 @@ FastAPI Backend (this project)
     ┌─────┴──────┐
     │            │
 ┌───▼───┐   ┌───▼────────┐
-│Chroma │   │  Google    │
-│Vector │   │  Gemini    │
+│Chroma │   │   Groq     │
+│Vector │   │  Llama3    │
 │  DB   │   │    API     │
 └───────┘   └────────────┘```
 
@@ -73,7 +83,7 @@ The backend reads PDF documents about health topics, breaks them into smaller pi
 ## What You Need
 
 - Python 3.8 or higher installed on your computer
-- A Google API key (you can get one free from Google)
+- A Groq API key (free - get it from [console.groq.com](https://console.groq.com/keys))
 - PDF documents about health topics you want the chatbot to know about
 
 ## Getting Started
@@ -82,20 +92,22 @@ The backend reads PDF documents about health topics, breaks them into smaller pi
 
 1. Double-click the setup_backend.bat file to install everything automatically
 
-2. Open the .env file and add your Google API key:
+2. Get your Groq API key from [console.groq.com/keys](https://console.groq.com/keys) (see [GROQ_SETUP.md](GROQ_SETUP.md))
+
+3. Open the .env file and add your Groq API key:
    ```
-   GOOGLE_API_KEY=your_key_here
+   GROQ_API_KEY=your_key_here
    ```
 
-3. Put your PDF files in the data folder
+4. Put your PDF files in the data folder
 
-4. Open Command Prompt in this folder and run:
+5. Open Command Prompt in this folder and run:
    ```
    venv\Scripts\activate
    python -m src.setup
    ```
 
-5. Double-click start_backend.bat to start the server
+6. Double-click start_backend.bat to start the server
 
 ### For Mac or Linux Users
 
@@ -105,9 +117,11 @@ The backend reads PDF documents about health topics, breaks them into smaller pi
    ./setup_backend.sh
    ```
 
-2. Open the .env file and add your Google API key:
+2. Get your Groq API key from [console.groq.com/keys](https://console.groq.com/keys) (see [GROQ_SETUP.md](GROQ_SETUP.md))
+
+3. Open the .env file and add your Groq API key:
    ```
-   GOOGLE_API_KEY=your_key_here
+   GROQ_API_KEY=your_key_here
    ```
 
 3. Put your PDF files in the data folder

@@ -12,7 +12,7 @@ class TestChatbotInitialization:
     """Test chatbot initialization."""
     
     @patch('src.chatbot.VectorStoreManager')
-    @patch('src.chatbot.ChatGoogleGenerativeAI')
+    @patch('src.chatbot.ChatGroq')
     @patch('src.chatbot.RetrievalQA')
     def test_chatbot_initialization(self, mock_qa, mock_llm, mock_vector):
         """Test chatbot can be initialized."""
@@ -31,7 +31,7 @@ class TestChatbotQueries:
     """Test chatbot query handling."""
     
     @patch('src.chatbot.VectorStoreManager')
-    @patch('src.chatbot.ChatGoogleGenerativeAI')
+    @patch('src.chatbot.ChatGroq')
     @patch('src.chatbot.RetrievalQA')
     def test_ask_question_returns_string(self, mock_qa, mock_llm, mock_vector):
         """Test that ask returns a string response."""
@@ -51,7 +51,7 @@ class TestChatbotQueries:
         assert len(result["answer"]) > 0
     
     @patch('src.chatbot.VectorStoreManager')
-    @patch('src.chatbot.ChatGoogleGenerativeAI')
+    @patch('src.chatbot.ChatGroq')
     @patch('src.chatbot.RetrievalQA')
     def test_ask_question_with_empty_input(self, mock_qa, mock_llm, mock_vector):
         """Test chatbot handles empty questions."""

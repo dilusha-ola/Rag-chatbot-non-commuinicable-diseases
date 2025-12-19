@@ -1,12 +1,12 @@
 """
 RAG Chatbot module for answering questions about non-communicable diseases.
-Uses LangChain to combine retrieval and generation with Google Gemini.
+Uses LangChain to combine retrieval and generation with Groq's Llama3.
 """
 
 import os
 from typing import Optional
 from langchain_classic.chains import RetrievalQA
-from langchain_google_genai import ChatGoogleGenerativeAI
+from langchain_groq import ChatGroq
 from langchain_core.prompts import PromptTemplate
 from dotenv import load_dotenv
 from src.vector_store import VectorStoreManager
@@ -17,32 +17,32 @@ class NCDChatbot:
     
     def __init__(
         self,
-        model_name: str = "models/gemini-2.5-flash",
+        model_name: str = "llama-3.1-8b-instant",
         temperature: float = 0.7,
-        google_api_key: Optional[str] = None
+        groq_api_key: Optional[str] = None
     ):
         """
         Initialize the chatbot.
         
         Args:
-            model_name: Google Gemini model to use
+            model_name: Groq model to use (llama-3.1-8b-instant, llama-3.1-70b-versatile, mixtral-8x7b-32768)
             temperature: Response creativity (0-1)
-            google_api_key: Google API key
+            groq_api_key: Groq API key
         """
         # Load environment variables
         load_dotenv()
         
-        if google_api_key:
-            os.environ["GOOGLE_API_KEY"] = google_api_key
+        if groq_api_key:
+            os.environ["GROQ_API_KEY"] = groq_api_key
         
         self.model_name = model_name
         self.temperature = temperature
         
-        # Initialize Gemini LLM
-        self.llm = ChatGoogleGenerativeAI(
+        # Initialize Groq LLM
+        self.llm = ChatGroq(
             model=self.model_name,
             temperature=self.temperature,
-            convert_system_message_to_human=True
+            groq_api_key=os.getenv("GROQ_API_KEY")
         )
         
         # Initialize vector store manager
@@ -180,5 +180,5 @@ if __name__ == "__main__":
     except Exception as e:
         print(f"Failed to initialize chatbot: {str(e)}")
         print("Make sure you have:")
-        print("1. Set your OPENAI_API_KEY in .env file")
+        print("1. Set your GROQ_API_KEY in .env file")
         print("2. Run the setup script to create the vector store")

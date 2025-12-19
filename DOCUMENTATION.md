@@ -1,6 +1,6 @@
-# NCD Health Assistant - Complete Project Documentation
+ NCD Health Assistant - Complete Project Documentation
 
-## Table of Contents
+ Table of Contents
 
 1. [Project Overview](#project-overview)
 2. [Tech Stack](#tech-stack)
@@ -16,25 +16,25 @@
 
 ---
 
-## Project Overview
+ Project Overview
 
-The NCD Health Assistant is a full-stack Retrieval-Augmented Generation (RAG) application designed to answer questions about Non-Communicable Diseases (NCDs) such as diabetes, heart disease, cancer, and hypertension. The system uses PDF documents as a knowledge base and leverages Google's Gemini AI to provide accurate, context-aware responses.
+The NCD Health Assistant is a full-stack Retrieval-Augmented Generation (RAG) application designed to answer questions about Non-Communicable Diseases (NCDs) such as diabetes, heart disease, cancer, and hypertension. The system uses PDF documents as a knowledge base and leverages Groq's Llama 3.1 AI to provide fast, accurate, context-aware responses.
 
-### Key Capabilities
+Key Capabilities
 
-- ✅ Document ingestion from PDF files
-- ✅ Vector-based semantic search
-- ✅ AI-powered question answering
-- ✅ Source attribution and citations
-- ✅ RESTful API with CORS support
-- ✅ Comprehensive test coverage
-- ✅ Interactive API documentation
+ Document ingestion from PDF files
+ Vector-based semantic search
+ AI-powered question answering
+ Source attribution and citations
+ RESTful API with CORS support
+ Comprehensive test coverage
+ Interactive API documentation
 
 ---
 
-## Tech Stack
+Tech Stack
 
-### Backend
+ Backend
 
 | Technology | Version | Purpose |
 |------------|---------|---------|
@@ -43,7 +43,8 @@ The NCD Health Assistant is a full-stack Retrieval-Augmented Generation (RAG) ap
 | **Uvicorn** | 0.32.0 | ASGI server for running FastAPI |
 | **LangChain** | 1.2.0 | Framework for LLM applications |
 | **ChromaDB** | 1.3.7 | Vector database for embeddings |
-| **Google Gemini** | Latest | Large Language Model (LLM) |
+| **Groq (Llama 3.1)** | llama-3.1-8b-instant | Large Language Model (LLM) |
+| **LangChain-Groq** | 1.1.1 | Groq integration for LangChain |
 | **Sentence Transformers** | Latest | Text embedding models |
 | **PyPDF** | 5.2.0 | PDF document processing |
 | **Pydantic** | 2.10.0 | Data validation and settings |
@@ -97,11 +98,11 @@ The NCD Health Assistant is a full-stack Retrieval-Augmented Generation (RAG) ap
 └─────────┬──────────────────────────┬────────────────────┘
           │                          │
           │                          │
-┌─────────▼──────────┐    ┌─────────▼──────────────┐
-│   ChromaDB         │    │   Google Gemini API    │
-│   Vector Database  │    │   (gemini-1.5-flash)   │
-│   (Local Storage)  │    │   (Cloud Service)      │
-└────────────────────┘    └────────────────────────┘
+┌─────────▼──────────┐    ┌─────────▼──────────────────┐
+│   ChromaDB         │    │      Groq API              │
+│   Vector Database  │    │   (llama-3.1-8b-instant)   │
+│   (Local Storage)  │    │   (Cloud Service)          │
+└────────────────────┘    └────────────────────────────┘
 ```
 
 ### RAG Pipeline Flow
@@ -279,7 +280,7 @@ my-chatbot-ui/                          # Frontend Repository
 - **Python**: 3.8 or higher
 - **Node.js**: 16.x or higher (for frontend)
 - **Git**: Latest version
-- **Google API Key**: From Google AI Studio
+- **Groq API Key**: Free from [console.groq.com/keys](https://console.groq.com/keys) - See [GROQ_SETUP.md](GROQ_SETUP.md)
 
 ### Backend Setup
 
@@ -295,7 +296,8 @@ setup_backend.bat
 
 # Configure environment
 copy .env.example .env
-# Edit .env and add your GOOGLE_API_KEY
+# Edit .env and add your GROQ_API_KEY
+# See GROQ_SETUP.md for getting your free API key
 
 # Add PDF documents
 # Place your PDF files in the data/ folder
@@ -323,7 +325,8 @@ chmod +x setup_backend.sh start_backend.sh
 
 # Configure environment
 cp .env.example .env
-# Edit .env and add your GOOGLE_API_KEY
+# Edit .env and add your GROQ_API_KEY
+# See GROQ_SETUP.md for getting your free API key
 
 # Add PDF documents
 # Place your PDF files in the data/ folder
@@ -364,8 +367,8 @@ npm run build
 Create a `.env` file in the backend root:
 
 ```env
-# Required: Google API Key
-GOOGLE_API_KEY=your_google_api_key_here
+# Required: Groq API Key (Get free at: https://console.groq.com/keys)
+GROQ_API_KEY=your_groq_api_key_here
 
 # Optional: CORS Origins (comma-separated)
 CORS_ORIGINS=http://localhost:3000,http://localhost:5173
@@ -374,8 +377,8 @@ CORS_ORIGINS=http://localhost:3000,http://localhost:5173
 HOST=0.0.0.0
 PORT=8000
 
-# Optional: Model Configuration
-MODEL_NAME=gemini-1.5-flash
+# Optional: Model Configuration (see GROQ_SETUP.md for options)
+GROQ_MODEL=llama-3.1-8b-instant
 TEMPERATURE=0.7
 MAX_TOKENS=2048
 
@@ -640,7 +643,7 @@ railway login
 railway init
 
 # Add environment variables
-railway variables set GOOGLE_API_KEY=your_key_here
+railway variables set GROQ_API_KEY=your_key_here
 
 # Deploy
 railway up
@@ -652,7 +655,7 @@ railway up
 2. Select "Web Service"
 3. Build Command: `pip install -r requirements.txt`
 4. Start Command: `uvicorn app:app --host 0.0.0.0 --port $PORT`
-5. Add environment variable: `GOOGLE_API_KEY`
+5. Add environment variable: `GROQ_API_KEY`
 
 #### Option 3: Docker
 
@@ -675,7 +678,7 @@ CMD ["uvicorn", "app:app", "--host", "0.0.0.0", "--port", "8000"]
 ```bash
 # Build and run
 docker build -t ncd-chatbot-backend .
-docker run -p 8000:8000 -e GOOGLE_API_KEY=your_key ncd-chatbot-backend
+docker run -p 8000:8000 -e GROQ_API_KEY=your_key ncd-chatbot-backend
 ```
 
 ### Frontend Deployment

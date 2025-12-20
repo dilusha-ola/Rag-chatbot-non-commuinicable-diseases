@@ -65,7 +65,8 @@ RAG-Non-communicable-diseases/
 │   ├── data_ingestion.py  # Reads and processes PDF files
 │   ├── vector_store.py    # Manages the document database
 │   ├── chatbot.py         # Handles questions and answers
-│   └── setup.py           # Creates the initial database
+│   ├── setup.py           # Creates the initial database
+│   └── add_documents.py   # Adds new PDFs incrementally
 ├── data/                  # Put your PDF documents here
 ├── chroma_db/            # Database storage (created automatically)
 ├── setup_backend.bat     # Windows setup script
@@ -109,6 +110,20 @@ The backend reads PDF documents about health topics, breaks them into smaller pi
 
 6. Double-click start_backend.bat to start the server
 
+### Adding More Documents Later
+
+If you want to add new PDF files after the initial setup:
+
+1. Put the new PDF files in the data folder
+
+2. Run the incremental update script:
+   ```
+   venv\Scripts\activate
+   python -m src.add_documents
+   ```
+
+This will only process the new files and add them to the existing database, saving time by not reprocessing everything.
+
 ### For Mac or Linux Users
 
 1. Open Terminal in this folder and run:
@@ -136,6 +151,20 @@ The backend reads PDF documents about health topics, breaks them into smaller pi
    ```
    ./start_backend.sh
    ```
+
+### Adding More Documents Later
+
+If you want to add new PDF files after the initial setup:
+
+1. Put the new PDF files in the data folder
+
+2. Run the incremental update script:
+   ```
+   source venv/bin/activate
+   python -m src.add_documents
+   ```
+
+This will only process the new files and add them to the existing database, saving time by not reprocessing everything.
 
 The server will start at http://localhost:8000
 

@@ -148,6 +148,7 @@ RAG-Non-communicable-diseases/          # Backend Repository
 ├── src/                                # Source code modules
 │   ├── __init__.py
 │   ├── setup.py                        # Database initialization script
+│   ├── add_documents.py                # Incremental document addition
 │   ├── data_ingestion.py               # PDF processing and chunking
 │   ├── vector_store.py                 # ChromaDB management
 │   └── chatbot.py                      # RAG chatbot implementation
@@ -226,6 +227,7 @@ my-chatbot-ui/                          # Frontend Repository
 - Intelligent text chunking with overlap
 - Support for multiple document formats
 - Batch document ingestion
+- **Incremental document updates** - Add new PDFs without reprocessing existing ones
 
 #### 2. Vector Search
 - Semantic similarity search
@@ -310,6 +312,14 @@ python -m src.setup
 start_backend.bat
 ```
 
+**Adding New Documents Later:**
+```batch
+# Add new PDF files to data/ folder
+# Then run incremental update
+venv\Scripts\activate
+python -m src.add_documents
+```
+
 #### Mac/Linux
 
 ```bash
@@ -337,6 +347,14 @@ python -m src.setup
 
 # Start server
 ./start_backend.sh
+```
+
+**Adding New Documents Later:**
+```bash
+# Add new PDF files to data/ folder
+# Then run incremental update
+source venv/bin/activate
+python -m src.add_documents
 ```
 
 ### Frontend Setup
@@ -764,6 +782,15 @@ source venv/bin/activate  # Mac/Linux
 python -m src.setup
 ```
 
+**Issue**: Need to add new PDF documents
+```bash
+# Solution 1: Use incremental update (faster, recommended)
+python -m src.add_documents
+
+# Solution 2: Recreate entire database (slower)
+python -m src.setup
+```
+
 **Issue**: `CORS error from frontend`
 ```bash
 # Solution: Update CORS_ORIGINS in .env
@@ -820,13 +847,14 @@ For issues, questions, or contributions:
 
 ## Changelog
 
-### Version 1.0.0 (Current)
+### Version 1.1.0 (Current)
 - ✅ Initial release
 - ✅ RAG pipeline implementation
 - ✅ FastAPI backend
 - ✅ React frontend
 - ✅ Comprehensive testing
 - ✅ Documentation
+- ✅ **NEW: Incremental document addition** - Add new PDFs without full reprocessing
 
 ### Upcoming Features
 - 🔄 Streaming responses
